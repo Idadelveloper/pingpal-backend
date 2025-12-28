@@ -1,0 +1,28 @@
+{
+  "name": "pingpal-backend",
+  "version": "1.0.0",
+  "description": "Backend server of pingpal app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Idadelveloper/pingpal-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Idadelveloper/pingpal-backend/issues"
+  },
+  "homepage": "https://github.com/Idadelveloper/pingpal-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "firebase-admin": "^13.6.0",
+    "redis": "^5.10.0"
+  }
+}

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpal-backend
+spec:
+  [cite_start]replicas: 3 # Matches the "Three pods" mentioned in the paper [cite: 254]
+  selector:
+    matchLabels:
+      app: pingpal-api
+  template:
+    metadata:
+      labels:
+        app: pingpal-api
+    spec:
+      containers:
+      - name: api
+        image: gcr.io/YOUR_PROJECT_ID/pingpal-backend:latest # You will build this
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REDIS_HOST
+          value: "redis-service" # Connects to the Redis pod above
+        - name: PORT
+          value: "3000"
+        # Mount Firebase credentials as a secret
+        volumeMounts:
+        - name: firebase-secret
+          mountPath: "/app/secrets"
+          readOnly: true
+      volumes:
+      - name: firebase-secret
+        secret:
+          secretName: firebase-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpal-loadbalancer
+spec:
+  [cite_start]type: LoadBalancer # Matches "Service type of Loadbalancer" in the paper [cite: 256]
+  selector:
+    app: pingpal-api
+  ports:
+    - port: 80
+      targetPort: 3000

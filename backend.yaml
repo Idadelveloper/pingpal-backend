@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpal-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pingpal-api
+  template:
+    metadata:
+      labels:
+        app: pingpal-api
+    spec:
+      containers:
+        - name: api
+          image: gcr.io/pingpal-16d18/pingpal-backend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: PORT
+              value: "3000"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/app/secrets/serviceAccountKey.json"
+          volumeMounts:
+            - name: firebase-secret
+              mountPath: "/app/secrets"
+              readOnly: true
+      volumes:
+        - name: firebase-secret
+          secret:
+            secretName: firebase-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpal-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: pingpal-api
+  ports:
+    - port: 80
+      targetPort: 3000

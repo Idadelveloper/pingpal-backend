@@ -37,7 +37,7 @@ kind: Service
 metadata:
   name: pingpal-loadbalancer
 spec:
-  [cite_start]type: LoadBalancer # Matches "Service type of Loadbalancer" in the paper [cite: 256]
+  [cite_start]type: LoadBalancer 
   selector:
     app: pingpal-api
   ports:

@@ -135,8 +135,8 @@ kubectl create secret generic firebase-key \
 Apply the Kubernetes manifests.
 
 ```bash
-kubectl apply -f k8s/redis-deployment.yaml
-kubectl apply -f k8s/backend-deployment.yaml
+kubectl apply -f redis.yaml
+kubectl apply -f backend.yaml
 ```
 
 ### 4. Verify Deployment
